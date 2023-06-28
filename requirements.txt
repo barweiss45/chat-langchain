@@ -12,3 +12,4 @@ unstructured
 libmagic
 beautifulsoup4
 tiktoken
+python-dotenv

@@ -1,4 +1,7 @@
 """Main entrypoint for the app."""
+import os
+from dotenv import load_dotenv
+
 import logging
 import pickle
 from pathlib import Path
@@ -11,6 +14,12 @@ from langchain.vectorstores import VectorStore
 from callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from query_data import get_chain
 from schemas import ChatResponse
+
+# Load .env
+load_dotenv()
+
+# OpenAI Key for OpenAI API
+openai_api_key = os.environ['OPENAI_API_KEY']
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")

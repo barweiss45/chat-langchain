@@ -1,4 +1,7 @@
 """Create a ChatVectorDBChain for question/answering."""
+import os
+from dotenv import load_dotenv
+
 from langchain.callbacks.base import AsyncCallbackManager
 from langchain.callbacks.tracers import LangChainTracer
 from langchain.chains import ChatVectorDBChain
@@ -9,6 +12,11 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 from langchain.vectorstores.base import VectorStore
 
+# Load .env
+load_dotenv()
+
+# OpenAI Key for OpenAI API
+openai_api_key = os.environ['OPENAI_API_KEY']
 
 def get_chain(
     vectorstore: VectorStore, question_handler, stream_handler, tracing: bool = False
