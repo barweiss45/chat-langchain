@@ -17,7 +17,9 @@ openai_api_key = os.environ['OPENAI_API_KEY']
 
 def ingest_docs():
     """Get documents from web pages."""
-    loader = ReadTheDocsLoader("pubhub.devnetcloud.com/media/pyats/docs/", features="html.parser")
+    # Note: Be Aware you wan to load the root URL of all files you want to load
+    # loader = ReadTheDocsLoader("pubhub.devnetcloud.com/media/pyats/docs/", features="html.parser") 
+    loader = ReadTheDocsLoader("api.python.langchain.com/en/latest/", features="html.parser")
     raw_documents = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
