@@ -1,10 +1,18 @@
 """Load html from files, clean up, split, ingest into Weaviate."""
+import os
+from dotenv import load_dotenv
 import pickle
 
 from langchain.document_loaders import ReadTheDocsLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.faiss import FAISS
+
+# Load .env
+load_dotenv()
+
+# OpenAI Key for OpenAI API
+openai_api_key = os.environ['OPENAI_API_KEY']
 
 
 def ingest_docs():
