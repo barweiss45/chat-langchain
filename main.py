@@ -9,7 +9,8 @@ from typing import Optional
 
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
 from fastapi.templating import Jinja2Templates
-from langchain.vectorstores import VectorStore
+from langchain.vectorstores import VectorStore, Chroma
+from langchain.embeddings import OpenAIEmbeddings
 
 from callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from query_data import get_chain
@@ -27,13 +28,15 @@ vectorstore: Optional[VectorStore] = None
 
 
 @app.on_event("startup")
-async def startup_event():
-    logging.info("loading vectorstore")
-    if not Path("vectorstore.pkl").exists():
-        raise ValueError("vectorstore.pkl does not exist, please run ingest.py first")
-    with open("vectorstore.pkl", "rb") as f:
-        global vectorstore
-        vectorstore = pickle.load(f)
+async def startup_event() -> None:
+    logging.info("Loading vectorstore")
+    # if not Path("vectorstore.pkl").exists():
+    #     raise ValueError("vectorstore.pkl does not exist, please run ingest.py first")
+    # #with open("vectorstore.pkl", "rb") as f:
+    #     global vectorstore
+    #     vectorstore = pickle.load(f) # Use this line if you are using FAISS
+    global vectorstore
+    vectorstore = Chroma(persist_directory="./chroma_db", embedding_function=OpenAIEmbeddings()) # Use this line if you are using ChromaDB
 
 
 @app.get("/")

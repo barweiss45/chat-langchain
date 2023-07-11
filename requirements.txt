@@ -13,3 +13,7 @@ libmagic
 beautifulsoup4
 tiktoken
 python-dotenv
+
+# NEEDED FOR CHROMADB
+sentence_transformers
+chromadb==0.3.25
